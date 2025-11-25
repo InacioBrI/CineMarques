@@ -1,1 +1,0 @@
- C:\\Users\\nayko\\Downloads\\CineMarques\\.dart_tool\\flutter_build\\2f2ff7738de81075debd5f15cd5927a7\\native_assets.yaml: 

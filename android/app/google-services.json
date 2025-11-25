@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "921066712758",
+    "project_id": "cinemarques2",
+    "storage_bucket": "cinemarques2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921066712758:android:8f705850da1fcdd7948017",
+        "android_client_info": {
+          "package_name": "com.cinemarques.myappluciano"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoxjN9LQoXS1L6iWFy91q2H7cBdtmyU5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
