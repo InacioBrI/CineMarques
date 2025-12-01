@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import '../services/database_service.dart';
+import '../services/auth_service.dart';
 import 'movie_detail_page.dart';
+import 'login.dart';
+import 'register.dart';
 
 class MovieListPage extends StatefulWidget {
   MovieListPage({super.key});
@@ -208,7 +212,54 @@ class _HeroBanner extends StatelessWidget {
     final imageUrl = movie['imageUrl'] as String? ?? '';
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        final authService = Provider.of<AuthService>(context, listen: false);
+        final user = authService.currentUser;
+
+        if (user == null) {
+          await showDialog<void>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Faça seu cadastro'),
+              content: const Text(
+                  'Você precisa estar logado para acessar os detalhes do filme.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const RegisterPage(),
+                      ),
+                    );
+                  },
+                  child: const Text('Cadastrar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LoginPage(),
+                      ),
+                    );
+                  },
+                  child: const Text('Já tenho conta'),
+                ),
+              ],
+            ),
+          );
+          return;
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -285,14 +336,64 @@ class _HeroBanner extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton.icon(
-                    onPressed: () {
+                    onPressed: () async {
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
+                      final user = authService.currentUser;
+
+                      if (user == null) {
+                        await showDialog<void>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Faça seu cadastro'),
+                            content: const Text(
+                                'Você precisa estar logado para acessar os detalhes do filme.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const RegisterPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Cadastrar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const LoginPage(),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Já tenho conta'),
+                              ),
+                            ],
+                          ),
+                        );
+                        return;
+                      }
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => MovieDetailPage(
                             title: title,
-                            description: movie['description'] as String? ?? '',
-                            imageUrl: imageUrl.isNotEmpty ? imageUrl : null,
+                            description:
+                                movie['description'] as String? ?? '',
+                            imageUrl:
+                                imageUrl.isNotEmpty ? imageUrl : null,
                           ),
                         ),
                       );
@@ -328,7 +429,54 @@ class _PopularMovieCard extends StatelessWidget {
     final imageUrl = movie['imageUrl'] as String? ?? '';
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        final authService = Provider.of<AuthService>(context, listen: false);
+        final user = authService.currentUser;
+
+        if (user == null) {
+          await showDialog<void>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Faça seu cadastro'),
+              content: const Text(
+                  'Você precisa estar logado para acessar os detalhes do filme.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const RegisterPage(),
+                      ),
+                    );
+                  },
+                  child: const Text('Cadastrar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LoginPage(),
+                      ),
+                    );
+                  },
+                  child: const Text('Já tenho conta'),
+                ),
+              ],
+            ),
+          );
+          return;
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'create_profile_page.dart';
+import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -218,6 +219,24 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(width: 16),
                       _SocialButton(icon: Icons.facebook),
                     ],
+                  ),
+
+                  const SizedBox(height: 24),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const LoginPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Já tem conta? Entrar',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
                   ),
                 ],
               ),

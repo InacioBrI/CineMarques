@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/database_service.dart';
+import 'discount_success_page.dart';
 
 class ConfirmationPage extends StatelessWidget {
   final String movieTitle;
@@ -123,14 +124,20 @@ class ConfirmationPage extends StatelessWidget {
                       code: code,
                     );
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Seu código de desconto: $code'),
+                    if (!context.mounted) return;
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => DiscountSuccessPage(
+                          movieTitle: movieTitle,
+                          discountCode: code,
+                        ),
                       ),
                     );
+                  } else {
+                    Navigator.popUntil(context, (route) => route.isFirst);
                   }
-
-                  Navigator.popUntil(context, (route) => route.isFirst);
                 },
                 child: const Text(
                   'Pay',
