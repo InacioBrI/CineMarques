@@ -42,6 +42,10 @@ class _PerfilPageState extends State<PerfilPage> {
             user?.displayName ??
             'Convidado';
 
+        final discountCodes = (data?['discountCodes'] as List<dynamic>? ?? [])
+            .map((e) => e.toString())
+            .toList();
+
         return Scaffold(
           appBar: AppBar(
             title: const Text('Meu Perfil'),
@@ -219,6 +223,59 @@ class _PerfilPageState extends State<PerfilPage> {
                             _formatDate(user.metadata.lastSignInTime),
                         trailing:
                             const Icon(Icons.login, color: Colors.blue),
+                      ),
+                      const SizedBox(height: 30),
+
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color:
+                                const Color(0xFF3C2DE1).withOpacity(0.2),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Meus códigos de desconto',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            if (discountCodes.isEmpty)
+                              const Text(
+                                'Você ainda não possui códigos de desconto.',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                ),
+                              )
+                            else
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: discountCodes
+                                    .map(
+                                      (code) => Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 4),
+                                        child: Text(
+                                          '• $code',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 30),
                     ],

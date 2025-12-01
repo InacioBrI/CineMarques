@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../services/database_service.dart';
 
 class ConfirmationPage extends StatelessWidget {
   final String movieTitle;
@@ -6,13 +8,15 @@ class ConfirmationPage extends StatelessWidget {
   final String time;
   final String seat;
 
-  const ConfirmationPage({
+  ConfirmationPage({
     super.key,
     required this.movieTitle,
     required this.dateLabel,
     required this.time,
     required this.seat,
-  });
+  }) : _databaseService = DatabaseService();
+
+  final DatabaseService _databaseService;
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +114,22 @@ class ConfirmationPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {
-                  // Por enquanto apenas volta para a tela anterior
+                onPressed: () async {
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    final code = _generateDiscountCode();
+                    await _databaseService.addDiscountCodeToUser(
+                      uid: user.uid,
+                      code: code,
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Seu código de desconto: $code'),
+                      ),
+                    );
+                  }
+
                   Navigator.popUntil(context, (route) => route.isFirst);
                 },
                 child: const Text(
@@ -128,5 +146,18 @@ class ConfirmationPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _generateDiscountCode() {
+    final normalizedTitle = movieTitle
+        .replaceAll(' ', '')
+        .replaceAll(RegExp(r'[^A-Za-z0-9]'), '')
+        .toUpperCase();
+    final prefix = normalizedTitle.length >= 3
+        ? normalizedTitle.substring(0, 3)
+        : normalizedTitle.padRight(3, 'X');
+    final millis = DateTime.now().millisecondsSinceEpoch.toString();
+    final suffix = millis.substring(millis.length - 4);
+    return '$prefix-$suffix';
   }
 }

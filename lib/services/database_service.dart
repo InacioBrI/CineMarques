@@ -23,6 +23,17 @@ class DatabaseService {
     }, SetOptions(merge: true));
   }
 
+  // Adicionar código de desconto ao perfil do usuário
+  Future<void> addDiscountCodeToUser({
+    required String uid,
+    required String code,
+  }) async {
+    await usersRef.doc(uid).set({
+      'discountCodes': FieldValue.arrayUnion([code]),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+  }
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> userStream(String uid) {
     return _db.collection('users').doc(uid).snapshots();
   }
