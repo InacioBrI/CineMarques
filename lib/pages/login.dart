@@ -59,6 +59,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _signInWithGoogle() async {
+    setState(() => _isLoading = true);
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final error = await authService.signInWithGoogle();
+
+    if (!mounted) return;
+
+    setState(() => _isLoading = false);
+
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+      return;
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomePage()),
+    );
+  }
+
   void _goToRegister() {
     Navigator.push(
       context,
@@ -215,7 +238,10 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _SocialButton(icon: Icons.g_mobiledata),
+                      _SocialButton(
+                        icon: Icons.g_mobiledata,
+                        onTap: _isLoading ? null : _signInWithGoogle,
+                      ),
                       const SizedBox(width: 16),
                       _SocialButton(icon: Icons.apple),
                       const SizedBox(width: 16),
@@ -271,19 +297,24 @@ class _LoginPageState extends State<LoginPage> {
 
 class _SocialButton extends StatelessWidget {
   final IconData icon;
+  final VoidCallback? onTap;
 
-  const _SocialButton({required this.icon});
+  const _SocialButton({required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 48,
-      height: 48,
-      decoration: BoxDecoration(
-        color: const Color(0xFF17152A),
-        borderRadius: BorderRadius.circular(14),
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: onTap,
+      child: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: const Color(0xFF17152A),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Icon(icon, color: Colors.white),
       ),
-      child: Icon(icon, color: Colors.white),
     );
   }
 }

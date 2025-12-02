@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,6 +27,36 @@ class AuthService extends ChangeNotifier {
       await result.user?.updateDisplayName(displayName);
       await result.user?.reload();
       
+      notifyListeners();
+      return null; // Sucesso
+    } on FirebaseAuthException catch (e) {
+      return _getErrorMessage(e.code);
+    } catch (e) {
+      return 'Erro desconhecido: $e';
+    }
+  }
+
+  // Login com Google
+  Future<String?> signInWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        return 'Login com Google cancelado.';
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _auth.signInWithCredential(credential);
+
       notifyListeners();
       return null; // Sucesso
     } on FirebaseAuthException catch (e) {
