@@ -95,7 +95,10 @@ class UserApi {
         details: replyList[2],
       );
     } else {
-      return (replyList[0] as PigeonUser?);
+      if (replyList[0] == null) {
+        return null;
+      }
+      return PigeonUser.decode(replyList[0]!);
     }
   }
 
