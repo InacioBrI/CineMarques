@@ -23,37 +23,26 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  pigeon: ^11.0.0
 
 flutter:
   uses-material-design: true
   assets:
-  - assets/images/telpreto2.jpg
-  - assets/images/sexta13.jpg
-  - assets/images/light-1.png
-  - assets/images/light-2.png
-  - assets/images/clock.png
-  - assets/images/background.jpg
-  - assets/images/backgroundlogin.jpg
-  - assets/images/exorcista.jpg
-  - assets/images/filmes1.jpg
-  - assets/images/filmes2.jpg
-  - assets/images/filmes3.jpg
-  - assets/images/filmes4.jpg
-  - assets/images/filmes5.jpg
-  - assets/images/filmes6.jpg
-  - assets/images/filmes7.jpg
-  - assets/images/filmes8.jpg
-  - assets/images/it.jpg
-  - assets/images/lanche.jpg
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+    - assets/images/telpreto2.jpg
+    - assets/images/sexta13.jpg
+    - assets/images/light-1.png
+    - assets/images/light-2.png
+    - assets/images/clock.png
+    - assets/images/background.jpg
+    - assets/images/backgroundlogin.jpg
+    - assets/images/exorcista.jpg
+    - assets/images/filmes1.jpg
+    - assets/images/filmes2.jpg
+    - assets/images/filmes3.jpg
+    - assets/images/filmes4.jpg
+    - assets/images/filmes5.jpg
+    - assets/images/filmes6.jpg
+    - assets/images/filmes7.jpg
+    - assets/images/filmes8.jpg
+    - assets/images/it.jpg
+    - assets/images/lanche.jpg
